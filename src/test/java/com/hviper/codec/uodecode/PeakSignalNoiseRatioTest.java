@@ -3,9 +3,8 @@
 package com.hviper.codec.uodecode;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.codec.binary.Hex;
 import org.junit.Test;
-
-import javax.xml.bind.DatatypeConverter;
 
 import static org.junit.Assert.*;
 
@@ -46,9 +45,9 @@ public class PeakSignalNoiseRatioTest
         assertFalse("No 'data' header in decoded output", dataStart < 0);
 
         // Headers must be equal. Compare as hex strings for better assert failures here.
-        String refHeaders = DatatypeConverter.printHexBinary(
+        String refHeaders = Hex.encodeHexString(
                 Arrays.copyOfRange(referenceWavFile, 0, dataStart));
-        String ourHeaders = DatatypeConverter.printHexBinary(
+        String ourHeaders = Hex.encodeHexString(
                 Arrays.copyOfRange(decodedWavFile, 0, dataStart));
         assertEquals("WAV headers do not match", refHeaders, ourHeaders);
         assertEquals("File lengths do not match", referenceWavFile.length, decodedWavFile.length);
